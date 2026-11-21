@@ -9,6 +9,7 @@ create table if not exists public.items (
   primary key (user_id, id)
 );
 alter table public.items enable row level security;
+grant select, insert, update, delete on public.items to authenticated;
 create policy "items_select" on public.items for select to authenticated using (auth.uid() = user_id);
 create policy "items_insert" on public.items for insert to authenticated with check (auth.uid() = user_id);
 create policy "items_update" on public.items for update to authenticated using (auth.uid() = user_id) with check (auth.uid() = user_id);
